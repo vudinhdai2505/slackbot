@@ -26,14 +26,19 @@ MESSAGE_BLOCK = {
 def message(payload):
     event = payload.get("event", {})
     text = event.get("text")
+    channel_id = event.get("channel")
     if "flip a coin" in text.lower():
-        channel_id = event.get("channel")
         rand_int = random.randint(0,1)
         if rand_int == 0:
             results = "Head"
         else:
             results = "Tail"
         message =  f"The result is {results}"
+        MESSAGE_BLOCK["text"]["text"] = message
+        message_to_send = {"channel": channel_id, "blocks": [MESSAGE_BLOCK]}
+        return slack_web_client.chat_postMessage(**message_to_send)
+    else:
+        message = "unknown"
         MESSAGE_BLOCK["text"]["text"] = message
         message_to_send = {"channel": channel_id, "blocks": [MESSAGE_BLOCK]}
         return slack_web_client.chat_postMessage(**message_to_send)
