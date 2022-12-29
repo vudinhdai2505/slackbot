@@ -40,7 +40,7 @@ def message(payload):
 
 @app.route('/')
 def test():
-    pass
+    return "hello"
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000)
