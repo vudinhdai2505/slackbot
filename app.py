@@ -9,7 +9,7 @@ import config
 
 app = Flask(__name__)
 
-SLACK_BOT_TOKEN = "xoxb-4575160099955-4577760292548-9g4J8cOuPH4htBV5gMyh7uRV"
+SLACK_BOT_TOKEN = "xoxb-4575160099955-4577760292548-MOl3pl7384bz8xOmPNVt8DiU"
 slack_event_adapter = SlackEventAdapter(config.SLACK_EVENTS_TOKEN, "/slack/events", app)
 slack_web_client = WebClient(SLACK_BOT_TOKEN)
 
@@ -26,8 +26,8 @@ MESSAGE_BLOCK = {
 def message(payload):
     event = payload.get("event", {})
     text = event.get("text")
-    channel_id = event.get("channel")
     if "flip a coin" in text.lower():
+        channel_id = event.get("channel")
         rand_int = random.randint(0,1)
         if rand_int == 0:
             results = "Head"
@@ -38,6 +38,7 @@ def message(payload):
         message_to_send = {"channel": channel_id, "blocks": [MESSAGE_BLOCK]}
         return slack_web_client.chat_postMessage(**message_to_send)
     else:
+        channel_id = event.get("channel")
         message = "unknown"
         MESSAGE_BLOCK["text"]["text"] = message
         message_to_send = {"channel": channel_id, "blocks": [MESSAGE_BLOCK]}
