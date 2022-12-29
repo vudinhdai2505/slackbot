@@ -9,9 +9,9 @@ import config
 
 app = Flask(__name__)
 
-
+SLACK_BOT_TOKEN = "xoxb-4575160099955-4577760292548-u0TN21EFMLveoodVu40JoDTF"
 slack_event_adapter = SlackEventAdapter(config.SLACK_EVENTS_TOKEN, "/slack/events", app)
-slack_web_client = WebClient(token=config.SLACK_BOT_TOKEN)
+slack_web_client = WebClient(SLACK_BOT_TOKEN)
 
 
 MESSAGE_BLOCK = {
@@ -21,7 +21,7 @@ MESSAGE_BLOCK = {
         "text" : ""
     }
 }
-
+# slack_web_client.chat_postMessage(channel='#test',text='Hello')
 @slack_event_adapter.on("message")
 def message(payload):
     event = payload.get("event", {})
