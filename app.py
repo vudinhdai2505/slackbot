@@ -9,7 +9,7 @@ import config
 
 app = Flask(__name__)
 
-SLACK_BOT_TOKEN = "xoxb-4575160099955-4577760292548-u0TN21EFMLveoodVu40JoDTF"
+SLACK_BOT_TOKEN = "xoxb-4575160099955-4577760292548-9g4J8cOuPH4htBV5gMyh7uRV"
 slack_event_adapter = SlackEventAdapter(config.SLACK_EVENTS_TOKEN, "/slack/events", app)
 slack_web_client = WebClient(SLACK_BOT_TOKEN)
 
