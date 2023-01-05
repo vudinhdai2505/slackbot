@@ -1,7 +1,7 @@
 import os
 import random
 
-from flask import Flask
+from flask import Flask, request, Response
 from slack import WebClient
 from slackeventsapi import SlackEventAdapter
 
@@ -46,9 +46,16 @@ def message(payload):
             message_to_send = {"channel": channel_id, "blocks": [MESSAGE_BLOCK]}
             return slack_web_client.chat_postMessage(**message_to_send)
 
-@app.route('/')
-def test():
-    return "hello"
+@ app.route('/message-count', methods=['POST'])
+def message_count():
+    data = request.form
+    user_id = data.get('user_id')
+    channel_id = data.get('channel_id')
+
+    slack_web_client.chat_postMessage(
+        channel=channel_id, text="I have got it")
+    return Response(), 200
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=3000)
